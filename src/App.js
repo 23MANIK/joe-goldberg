@@ -5,7 +5,7 @@ import PhotoGallery from "./components/PhotoGallery";
 import PhotoModal from "./components/PhotoModal";
 import SearchBar from "./components/SearchBar";
 import useKeyboardNav from "./hooks/useKeyboardNav";
-import { API_URL } from "./config";
+import { BACKEND_API_URL } from "./config";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -23,7 +23,7 @@ function App() {
 
   // Fetch users on mount
   useEffect(() => {
-    fetch(`${API_URL}/users`)
+    fetch(`${BACKEND_API_URL}/users`)
       .then(res => res.json())
       .then(setUsers);
   }, []);

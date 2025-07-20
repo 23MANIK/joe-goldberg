@@ -1,1 +1,1 @@
-export const API_URL = process.env.JOE_BACKEND_API;
+export const BACKEND_API_URL = 'https://joe-goldberge-backend-production.up.railway.app/api';
