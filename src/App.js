@@ -23,7 +23,7 @@ function App() {
 
   // Fetch users on mount
   useEffect(() => {
-    fetch(`${API_URL}/users`)
+    fetch(`http://localhost:8080/api/users`)
       .then(res => res.json())
       .then(setUsers);
   }, []);
