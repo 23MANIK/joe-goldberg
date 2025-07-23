@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState, useEffect } from "react";
 import UserList from "./components/UserList";
 import ProfileDetails from "./components/ProfileDetails";
@@ -21,13 +22,16 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPhotoIdx, setSelectedPhotoIdx] = useState(null);
 
+  // Fetch users (with content already merged in each user object)
   const { users, totalCount } = useUsers(page, filter);
 
   useEffect(() => {
     setSelectedIdx(0);
   }, [users]);
 
+  // Use users returned from hook directly—each has `content`, `answers`, and `photos` as needed
   const filteredUsers = users;
+
   const selected = filteredUsers[selectedIdx] || { photos: [] };
 
   useKeyboardNav({
@@ -40,6 +44,7 @@ function App() {
     clearSelectedPhotoIdx: () => setSelectedPhotoIdx(null),
   });
 
+  // Modal handlers
   const handleImgClick = (idx) => {
     setSelectedPhotoIdx(idx);
     setModalOpen(true);
@@ -50,14 +55,9 @@ function App() {
   };
 
   return (
-    <div
-      style={{ display: "flex", minHeight: "100vh", fontFamily: "sans-serif" }}
-    >
-      <UserList
-        users={filteredUsers}
-        selectedIdx={selectedIdx}
-        onSelect={setSelectedIdx}
-      />
+    <div style={{ display: "flex", minHeight: "100vh", fontFamily: "sans-serif" }}>
+      <UserList users={filteredUsers} selectedIdx={selectedIdx} onSelect={setSelectedIdx} />
+
       <main style={{ flex: 1, padding: "2em" }}>
         <div
           style={{
@@ -71,11 +71,11 @@ function App() {
           <span>
             {totalCount} {totalCount === 1 ? "candidate" : "candidates"} found
           </span>
-
-          {/* Pass callback to refresh user list after loading */}
           <LoadUsersButton onLoadComplete={() => setPage(0)} />
         </div>
+
         <SearchBar filter={filter} setFilter={setFilter} />
+
         {filteredUsers.length === 0 ? (
           <div
             style={{
@@ -90,12 +90,9 @@ function App() {
           </div>
         ) : (
           <>
-            <ProfileDetails user={selected} />
+            <ProfileDetails user={selected} content={selected.content} />
             <h3>Photos:</h3>
-            <PhotoGallery
-              photos={selected.photos}
-              onImgClick={handleImgClick}
-            />
+            <PhotoGallery photos={selected.photos} onImgClick={handleImgClick} />
             <PhotoModal
               open={modalOpen}
               photo={selected.photos ? selected.photos[selectedPhotoIdx] : null}
@@ -103,10 +100,11 @@ function App() {
             />
           </>
         )}
+
         <Pagination
           page={page}
           setPage={setPage}
-          disabled={filteredUsers.length < 20}
+          disabled={filteredUsers.length < 10} // adjust this if your page size changes
         />
       </main>
     </div>
