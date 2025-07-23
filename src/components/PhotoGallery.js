@@ -12,6 +12,8 @@ export default function PhotoGallery({ photos, onImgClick }) {
         gap: "16px",
         alignItems: "center",
         paddingRight: "8px",
+        background: "#222", // dark gallery background
+        borderRadius: "8px",
       }}
     >
       {(photos || []).map((p, i) => {

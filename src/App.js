@@ -55,10 +55,18 @@ function App() {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", fontFamily: "sans-serif" }}>
+    <div
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        fontFamily: "sans-serif",
+        background: "#181A20", // dark background
+        color: "#EDEDED",      // light text
+      }}
+    >
       <UserList users={filteredUsers} selectedIdx={selectedIdx} onSelect={setSelectedIdx} />
 
-      <main style={{ flex: 1, padding: "2em" }}>
+      <main style={{ flex: 1, padding: "2em", background: "#181A20", color: "#EDEDED" }}>
         <div
           style={{
             marginBottom: "1em",
@@ -80,7 +88,7 @@ function App() {
           <div
             style={{
               fontStyle: "italic",
-              color: "#999",
+              color: "#888",
               fontSize: "1.3em",
               marginTop: "2em",
               textAlign: "center",
@@ -104,7 +112,7 @@ function App() {
         <Pagination
           page={page}
           setPage={setPage}
-          disabled={filteredUsers.length < 10} // adjust this if your page size changes
+          disabled={filteredUsers.length < 10}
         />
       </main>
     </div>
