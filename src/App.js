@@ -60,12 +60,11 @@ function App() {
         display: "flex",
         minHeight: "100vh",
         fontFamily: "sans-serif",
-        background: "#181A20", // dark background
-        color: "#EDEDED",      // light text
+        background: "#181A20",
+        color: "#EDEDED",
       }}
     >
       <UserList users={filteredUsers} selectedIdx={selectedIdx} onSelect={setSelectedIdx} />
-
       <main style={{ flex: 1, padding: "2em", background: "#181A20", color: "#EDEDED" }}>
         <div
           style={{
@@ -100,7 +99,12 @@ function App() {
           <>
             <ProfileDetails user={selected} content={selected.content} />
             <h3>Photos:</h3>
-            <PhotoGallery photos={selected.photos} onImgClick={handleImgClick} />
+            {/* Pass the className to PhotoGallery */}
+            <PhotoGallery
+              photos={selected.photos}
+              onImgClick={handleImgClick}
+              mediaClassName="media-hover-zoom"
+            />
             <PhotoModal
               open={modalOpen}
               photo={selected.photos ? selected.photos[selectedPhotoIdx] : null}
@@ -115,6 +119,22 @@ function App() {
           disabled={filteredUsers.length < 10}
         />
       </main>
+
+      {/* Add this style tag for hover scaling */}
+      <style>
+        {`
+          .media-hover-zoom {
+            transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+            cursor: pointer;
+            z-index: 1;
+          }
+          .media-hover-zoom:hover {
+            transform: scale(1.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            z-index: 2;
+          }
+        `}
+      </style>
     </div>
   );
 }
